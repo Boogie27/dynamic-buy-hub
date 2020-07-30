@@ -148,8 +148,14 @@ if(Input::get("loginButton")){
 // ======================================================================
 if(Input::get("logUserOut")){
     if(Session::exists(Config::get("session/session_name"))){
-        Session::delete(Config::get("session/session_name"));
-        echo "loggedOut";
+       
+        $logout = new User();
+        if(!$logout->logout()){
+           echo "something went wrong!";
+        }else{
+            Session::delete(Config::get("session/session_name"));
+            echo "loggedOut";
+        }
     }
 }
 

@@ -97,18 +97,18 @@
                                 $image = $user->first()["image"];
                             }
                             if($image == null){
-                                $image = "profile_image/profile-image.png";
+                                $image = "profile-image/profile-image.png";
                             }
                        }else{
                           $name = "user name" ;
-                          $image = "profile_image/profile-image.png";
+                          $image = "profile-image/profile-image.png";
                        }
                       
                        ?>
                             <div class="account-left-bar">
                                 <div class="account-right-bar-image">
                                     <div class="account-side-immage">
-                                        <img src="<?= $image ?>" alt="<?= $name?>">
+                                        <img src="admin/<?= $image ?>" alt="<?= $name?>">
                                         <?php
                                             if(Session::exists(Config::get("session/session_name"))):
                                                 echo ' <i class="fas fa-pen form-action-button" data-type="edit-form"></i>';

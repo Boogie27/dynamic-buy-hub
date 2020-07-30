@@ -73,7 +73,7 @@
                                                              foreach($categories->result() as $items){ ?>
                                                                     <div class="col-lg-4 col-md-6 col-sm-6 col-6">
                                                                         <div class="cat-item myScrollItem">
-                                                                                <a href="product.php?item=<?= $items["name"]?>&category=<?= $items["id"]?>"><img src="images/<?= $items["image"]; ?>" alt="main-image-3"></a>
+                                                                                <a href="product.php?item=<?= $items["name"]?>&category=<?= $items["id"]?>"><img src="admin/category-image/<?= $items["image"]; ?>" alt="<?= $items["name"];?>"></a>
                                                                                 <h4><?= $items["name"]?></h4>
                                                                                 <p>Best sellers there is in online clothing market.</p>
                                                                         </div>

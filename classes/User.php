@@ -66,6 +66,9 @@ class User extends Category{
 
                  if($this->getUser($email)){
                     $id =  $this->_data["id"];
+                    self::update("users", array(
+                         "online" => 1
+                    ), array("id", "=", $id));
                     Session::put($this->_sessionName, $id);
                  }
                  return true;
@@ -140,6 +143,9 @@ class User extends Category{
                          }else{
                             $id = $this->data()["id"];
                             if($this->data()["password"] === Hash::make($password, $this->data()["salt"])){
+                                self::update("users", array(
+                                    "online" => 1
+                               ), array("id", "=", $this->data()["id"]));
                                Session::put($this->_sessionName, $this->data()["id"]);
                                return true;
                             }else{
@@ -218,7 +224,7 @@ class User extends Category{
                     if($Error === 0){
                             if($Size <= 1000000){
                                 $fileName = "profile_image_".uniqid().".".$fileExt;
-                                $fileDestination = "profile_image/".$fileName;
+                                $fileDestination = "profile-image/".$fileName;
 
                                 $update = self::update("users", array(
                                     "name" => $name,
@@ -257,7 +263,8 @@ class User extends Category{
                if($this->find($id)){
                     if($this->data()["password"] == Hash::make($password, $this->data()["salt"])){
                          $delete =  self::update("users", array(
-                                 "activate" => false
+                                 "activate" => false,
+                                 "online" => 0
                           ), array("id", "=", $id));
                           if($delete){
                             Session::delete(Config::get("session/session_name"));
@@ -276,6 +283,17 @@ class User extends Category{
 
 
 
+
+    public function logout(){
+        if(Session::exists($this->_sessionName)){
+                 $id = Session::get($this->_sessionName);
+                self::update("users", array(
+                   "online" => 0
+                ), array("id", "=", $id));
+            return true;
+        }
+        return false;
+    }
 
 
 

@@ -86,7 +86,7 @@ class Category{
                             }
                         }
                     }
-            }
+                }
             }
         
             if(!$this->query($sql, $values)->error()){

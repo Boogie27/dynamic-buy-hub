@@ -50,8 +50,8 @@ class Input{
 
 
            public function money($string = null){
-               $sign = "&#8358;";
                if($string){
+                    $sign = "&#8358;";
                     return $sign.number_format($string);
                }
            }

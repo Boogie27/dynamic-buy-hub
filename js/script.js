@@ -329,6 +329,8 @@ var loginAction = $(".loginAction");
                 success: function(response){
                    if(response == "loggedOut"){
                        location.reload();
+                   }else{
+                       console.log(response)
                    }
                 }
            });

@@ -259,7 +259,7 @@ if(Input::exists("POST")){
                                                                     ?>
                                                                     <div class="col-md-3 col-sm-4 col-4">
                                                                         <div class="featured-item">
-                                                                            <a href="detail.php?product=<?= $featured["id"];?>&slug=<?= $featured["slug"];?>"><img src="images/<?= $image[0]; ?>" alt="<?= $featured["name"]; ?>"></a>
+                                                                            <a href="detail.php?product=<?= $featured["id"];?>&slug=<?= $featured["slug"];?>"><img src="admin/images/<?= $image[0]; ?>" alt="<?= $featured["name"]; ?>"></a>
                                                                            
                                                                                 <ul>
                                                                                     <li class="percentage">-3%</li>

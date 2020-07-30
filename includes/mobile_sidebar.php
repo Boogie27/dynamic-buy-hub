@@ -8,11 +8,11 @@
     $email = $user->first()["email"];
     $image = $user->first()["image"];
     if($image == null){
-        $image = "profile_image/profile-image.png";
+        $image = "profile-image/profile-image.png";
     }
  }else{
     $name = "user name" ;
-    $image = "profile_image/profile-image.png";
+    $image = "profile-image/profile-image.png";
     $email = "example@gmail.com";
  }
 
@@ -23,7 +23,7 @@
                           <i class="fas fa-times" id="sideBarClose"></i>
                           <div class="profile-head">
                               <div class="profile-img">
-                                  <img src="<?= $image; ?>" alt="<?= $name?>">
+                                  <img src="admin/<?= $image; ?>" alt="<?= $name?>">
                                    <?php
                                         if(Session::exists(Config::get("session/session_name"))):
                                               echo ' <i class="fas fa-pen form-action-button" data-type="edit-form"></i>';
