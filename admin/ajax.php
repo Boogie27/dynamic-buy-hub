@@ -488,7 +488,67 @@ if(Input::get("selectedCategory")){
 
 
 
+// ==================================================================
+//   FUNCTION THAT DISPLAYS EDIT PRODUCT IMAGE 
+// ==================================================================
 
+if(Input::get("productImage")){
+    if(Session::exists(Config::get("session/session_name"))){
+        $imageID = escape(Input::get("productImageID"));
+       
+       $product = new Product();
+       $product->get("products", array("id", "=", $imageID));
+        if($product->count()){
+            $item = $product->first();
+            $saved_image = explode(",", $item->image);
+            foreach($saved_image as $values){
+             echo ' <div class="frame-item productImageDelete">
+                        <img src="images/'.$values.'" alt="'.$item->name.'">
+                        <button type="button" class="edit-delete-button" id="'.$item->id.'"><i class="fa fa-times"></i></button>
+                    </div>';
+          }
+        }
+       
+    }
+}
+
+
+
+// ==================================================================
+//   FUNCTION THAT DELETES PRODUCT IMAGE 
+// ==================================================================
+if(Input::get("productImageDelete")){
+    if(Session::exists(Config::get("session/session_name"))){
+        $imageID = escape(Input::get("imageID"));
+        $imageIndex = escape(Input::get("imageIndex"));
+
+       $product = new Product($imageID);
+       $products = $product->delete_image($imageID, $imageIndex);
+       if($products){
+           echo "image_deleted";
+       }
+       
+    }
+}
+
+
+
+// ==================================================================
+//   FUNCTION THAT DELETES PRODUCT 
+// ==================================================================
+if(Input::get("productItemDelete")){
+    if(Session::exists(Config::get("session/session_name"))){
+        $productDeleteID = escape(Input::get("productDeleteID"));
+       
+        $product = new Product($productDeleteID);
+        $products = $product->delete_product();
+         if($products){
+           $product->delete("products", array("id", "=", $productDeleteID));
+           echo "deleted";
+         }
+
+    }
+}
 
 
 

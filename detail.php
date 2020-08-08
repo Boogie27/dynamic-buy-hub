@@ -21,18 +21,22 @@ if(is_numeric(Input::get("product")) && $productOBJ->get("products", array("slug
                              <div class="detail-header">
                                  <h1><?= $productOBJ->first()["name"];?></h1>
                                  <ul>
-                                     <li class="item-name">native</li>
-                                     <li><i class="fas fa-star star-detail"></i><i class="fas fa-star star-detail"></i><i class="fas fa-star star-detail"></i><i class="fas fa-star star-detail"></i><i class="fas fa-star star-detail"></i> <span>69 Ratings</span></li>
+                                     <li class="item-name"><?=$productOBJ->first()["brand"]; ?></li>
+                                     <li>
+                                     <?php
+                                        $ratings = new Ratings($productOBJ->first()["id"]);
+                                        $ratings->star_ratings();   
+                                    ?>
                                  </ul>
                              </div>
                              <div class="detail-images">
                                    <div class="detail-slide-frame swiper-container">
                                          <div class="main-detail-image swiper-track">
                                          <?php
-                                              $image = Input::json_decode($productOBJ->first()["image"]);
+                                              $image = explode(",", $productOBJ->first()["image"]);
                                               foreach($image as $imageValues){ ?>
                                                     <div class="detailImages">
-                                                        <img src="images/<?= $imageValues?>" alt="<?= $productOBJ->first()["name"]?>">
+                                                        <img src="admin/images/<?= $imageValues?>" alt="<?= $productOBJ->first()["name"]?>">
                                                     </div>
                                          <?php  }  ?>
                                           </div>
@@ -46,10 +50,10 @@ if(is_numeric(Input::get("product")) && $productOBJ->get("products", array("slug
                                                        $id = $productOBJ->first()["id"];
                                                        $items = $subImageOBJ->get("products", array("slug", "=", $slug))->result();
                                                       foreach($items as $subItems){ 
-                                                            $subImages = Input::json_decode($subItems["image"]);
+                                                            $subImages = explode(",", $subItems["image"]);
                                                           ?>
                                                             <div class="sub-image <?= Input::get("product") == $subItems["id"]? "active-image" : ""?>">
-                                                              <a href="detail.php?product=<?= $subItems["id"];?>&slug=<?= $subItems["slug"];?>"><img src="images/<?= $subImages[0]; ?>" alt="<?= $items["name"]?>"></a>
+                                                              <a href="detail.php?product=<?= $subItems["id"];?>&slug=<?= $subItems["slug"];?>"><img src="admin/images/<?= $subImages[0]; ?>" alt="<?= $items["name"]?>"></a>
                                                             </div>
                                                     <?php  } ?>
                                             </div>
@@ -79,11 +83,11 @@ if(is_numeric(Input::get("product")) && $productOBJ->get("products", array("slug
                                       <div class="detail-thumb-container">
                                              <div class="row">
                                              <?php
-                                                $image = Input::json_decode($productOBJ->first()["image"]);
+                                                $image = explode(",", $productOBJ->first()["image"]);
                                                 foreach($image as $imageValues){ ?>
                                                         <div class="col-lg-4 col-md-4 col-sm-3 col-4 detail-thumb">
                                                                 <div class="detail-thumb-image">
-                                                                    <img src="images/<?= $imageValues; ?>" alt="<?= $productOBJ->first()["name"]?>">
+                                                                    <img src="admin/images/<?= $imageValues; ?>" alt="<?= $productOBJ->first()["name"]?>">
                                                                 </div>
                                                         </div>
                                              <?php  }  ?>
@@ -121,7 +125,7 @@ if(is_numeric(Input::get("product")) && $productOBJ->get("products", array("slug
                                      </div>
                                      <div class="product-detail-body">
                                          <h2>Description:</h2>
-                                         <p>Mens africanclothing tribal dashiki traditional maxi stand collar long sleeves dress shirt plus size.</p>
+                                         <p><?= nl2br($productOBJ->first()["description"]);?></p>
                                          <h2>feautures:</h2>
                                          <p>African style, Long Sleeves, Tribal Print, Stand Collar, Slim fit, Lightweight, Dress pullover tops.</p>
                                          <h2>Notice:</h2>
@@ -139,14 +143,16 @@ if(is_numeric(Input::get("product")) && $productOBJ->get("products", array("slug
                                                 $id = $productOBJ->first()["id"];
                                                 $items = $subImageOBJ->rand("products", array("slug", "=", $slug), 4)->result();
                                                 foreach($items as $subItems){ 
-                                                    $subImages = Input::json_decode($subItems["image"]);
+                                                    $subImages = explode(",", $subItems["image"]);
                                                     ?>
                                                     <div class="frequently-bought-item slider">
                                                             <div class="ratings">
-                                                                    <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>
-                                                                    <span>85%</span>
+                                                            <?php
+                                                                $ratings = new Ratings($subItems["id"]);
+                                                                $ratings->star_ratings();   
+                                                            ?>
                                                             </div>
-                                                            <a href="detail.php?product=<?= $subItems["id"];?>&slug=<?= $subItems["slug"];?>"><img src="images/<?= $subImages[0]?>" alt="image-detail-3"></a>
+                                                            <a href="detail.php?product=<?= $subItems["id"];?>&slug=<?= $subItems["slug"];?>"><img src="admin/images/<?= $subImages[0]?>" alt="image-detail-3"></a>
                                                             <h3><?= $subItems["name"]?></h3>
                                                             <ul>
                                                                 <li><?= $subItems["description"]?></li>
@@ -182,13 +188,16 @@ if(is_numeric(Input::get("product")) && $productOBJ->get("products", array("slug
                                     $id = $productOBJ->first()["id"];
                                     $items = $subImageOBJ->rand("products", array("slug", "=", $slug), 5)->result();
                                     foreach($items as $subItems){ 
-                                        $subImages = Input::json_decode($subItems["image"]);
+                                        $subImages = explode(",", $subItems["image"]);
                                         ?>
                                          <div class="viewed-items">
-                                            <a href="detail.php?product=<?= $subItems["id"]?>&slug=<?= $subItems["slug"]; ?>"><img src="images/<?= $subImages[0]?>" alt=""></a>
+                                            <a href="detail.php?product=<?= $subItems["id"]?>&slug=<?= $subItems["slug"]; ?>"><img src="admin/images/<?= $subImages[0]?>" alt=""></a>
                                             <ul>
-                                                <li><?= $subItems["description"]; ?></li>
-                                                <li><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></li>
+                                                <li><?= $subItems["details"]; ?></li>
+                                                <li> <?php
+                                                        $ratings = new Ratings($subItems["id"]);
+                                                        $ratings->star_ratings();   
+                                                    ?></li>
                                                 <li class="text-danger price"><?= Input::money($subItems["price"])?></li>
                                             </ul>
                                         </div>
@@ -212,70 +221,48 @@ if(is_numeric(Input::get("product")) && $productOBJ->get("products", array("slug
                     <div class="question-header">
                         <h2>Customers Question & answers</h2>
                     </div>
-                    <form action="">
-                        <div class="form-group">
-                            <input type="text" class="form-control" value="" placeholder="Have a question?">
-                            <button  type="submit" class="btn btn-primary">Send</button>
-                        </div>
-                    </form>
-                    <div class="customers">
-                        <div class="customer-images">
-                            <img src="images/profile-image.png" alt="profile-image">
-                            <h3>Morgan Morer</h3>
-                            <h4>february 17, 2020</h4>
-                        </div>
-                        <div class="customers-question">
-                              <ul>
-                                  <li><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></li>
-                                  <li class="custommers-text">this is a very nice peice of traditional wear i love it so much and it fits just perfectly. it 
-                                      is cheap and smooth , i got a lot of compliment at the party..
-                                  </li>
-                                  <li class="delete"><a href="#">Delete</a></li>
-                                  <li class="comment"><a href="#">Comment</a></li>
-                                  <li class="report"><a href="#">Report Abuse</a></li>
-                              </ul>
-                        </div>
-                   </div>
-
-                   <div class="customers">
-                    <div class="customer-images">
-                        <img src="images/profile-image.png" alt="profile-image">
-                        <h3>Freeman chikason</h3>
-                        <h4>february 17, 2020</h4>
-                    </div>
-                    <div class="customers-question">
-                          <ul>
-                                <li><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></li>
-                                <li class="custommers-text">this is a very nice peice of traditional wear i love it so much and it fits just perfectly. it 
-                                    is cheap and smooth , i got a lot of compliment at the party..
-                                </li>
-                                    <li class="delete"><a href="#">Delete</a></li>
-                                    <li class="comment"><a href="#">Comment</a></li>
-                                    <li class="report"><a href="#">Report Abuse</a></li>
-                                </ul>
-                            </div>
-                     </div>
-
-                <div class="customers">
-                        <div class="customer-images">
-                            <img src="images/profile-image.png" alt="profile-image">
-                            <h3>Sharon Welfred</h3>
-                            <h4>february 17, 2020</h4>
-                        </div>
-                        <div class="customers-question">
-                            <ul>
-                                <li><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></li>
-                                <li class="custommers-text">this is a very nice peice of traditional wear i love it so much and it fits just perfectly. it 
-                                    is cheap and smooth , i got a lot of compliment at the party..
-                                </li>
-                                <li class="delete"><a href="#">Delete</a></li>
-                                <li class="comment"><a href="#">Comment</a></li>
-                                <li class="report"><a href="#">Report Abuse</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <?php
+                        $user = new User();
+                        $user->get("comment", array("product_id", "=", $productOBJ->first()["id"]));
+                        if($user->count()){ 
+                            foreach($user->result() as $values){
+                                $userInfo = $user->get("users", array("id", "=", $values["user_id"]))->first();
+                                ?>
+                                <div class="customers">
+                                    <div class="customer-images">
+                                        <img src="admin/<?= $userInfo["image"];?>" alt="<?= $userInfo["image"];?>">
+                                        <h3><?= $userInfo["name"];?></h3>
+                                        <h4 class="text-danger"><?=Input::date($userInfo["date"]); ?></h4>
+                                    </div>
+                                    <div class="customers-question">
+                                        <ul>
+                                            <li><?=  Ratings::user_rate($values["ratings"]);?></li>
+                                            <li class="custommers-text"><?=nl2br($values["comment"]); ?>
+                                            </li>
+                                            <li class="delete"><a href="#">Delete</a></li>
+                                            <li class="comment"><a href="#">Comment</a></li>
+                                            <li class="report"><a href="#">Report Abuse</a></li>
+                                        </ul>
+                                     </div>
+                                </div>
+                            <?php
+                            }
+                      }
+                    ?>
                  </div>
+                 <form action="detail.php?product=<?=$productOBJ->first()["id"] ?>&slug=<?= $productOBJ->first()["slug"]?>" method="post">
+                    <div class="form-group">
+                        <label for="title" style="font-size: 80%;">Title:</label>
+                        <input type="text" class="form-control col-md-6" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="title" style="font-size: 80%;">Comment:</label>
+                        <textarea name="comment" id="" class="form-control col-md-6" cols="10" rows="2"></textarea>
+                    </div>
+                    <button  type="submit" class="btn btn-primary" style="font-size: 60%;">Send</button>
+                </form>
              </div>
+             <br><br>
     </section>
        
 
@@ -297,14 +284,17 @@ if(is_numeric(Input::get("product")) && $productOBJ->get("products", array("slug
                                   
                                     $items = $subImageOBJ->rand("products", array("categories", "=", $categories), 6)->result();
                                     foreach($items as $subItems){ 
-                                        $subImages = Input::json_decode($subItems["image"]);
+                                        $subImages = explode(",",$subItems["image"]);
                                         ?>
                                         <div class="col-lg-2 col-md-2 col-sm-6 col-6">
                                             <div class="advert">
                                             <a href="detail.php?product=<?= $subItems["id"]?>&slug=<?= $subItems["slug"]; ?>"><img src="images/<?= $subImages[0]?>" alt="female-native-3"></a>
                                                 <ul>
-                                                    <li><?= $subItems["description"]?> <span> ( <?= $subItems["name"]?> ) </span></li>
-                                                    <li><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></li>
+                                                    <li><?= $subItems["details"]?> <span> ( <?= $subItems["name"]?> ) </span></li>
+                                                    <li> <?php
+                                                        $ratings = new Ratings($subItems["id"]);
+                                                        $ratings->star_ratings();   
+                                                    ?></li>
                                                 </ul>
                                             </div>
                                         </div>

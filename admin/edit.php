@@ -8,6 +8,8 @@
     $profile->get("admin", array("id", "=", $user_id));
     $user_profile = $profile->first();
     
+     }else{
+         Redirect::to("index.php");
      }
 
 

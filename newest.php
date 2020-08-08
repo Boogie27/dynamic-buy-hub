@@ -93,20 +93,20 @@
                                                     <div class="col-lg-9 col-md-12 expland">
                                                       <div class="main-images slideContainer">
                                                           <div class="slide slideItem">
-                                                              <img src="images/main-image_1.jpg" alt="main-image-1" class="main-img">
+                                                              <img src="admin/logo/index-slide-2.jpg" alt="main-image-1" class="main-img">
                                                                <div class="tag">
                                                                   <h2>gifts at every price</h2>
                                                                </div>
                                                           </div>
                                                           <div class="slide slideItem" style="display: block;">
-                                                              <img src="images/main-image-5.jpg" alt="main-image-2" class="main-img">
+                                                              <img src="admin/logo/main-image-5.jpg" alt="main-image-2" class="main-img">
                                                               <div class="tag">
                                                                 <h2>free online shopping</h2>
                                                                 <a href="">explore</a>
                                                              </div>
                                                           </div>
                                                           <div class="slide slideItem">
-                                                              <img src="images/main-image-3.jpg" alt="main-image-3" class="main-img">
+                                                              <img src="admin/logo/main-image-3.jpg" alt="main-image-3" class="main-img">
                                                               <div class="tag">
                                                                 <h2>get upto 30% off <br>new arivals</h2>
                                                              </div>
@@ -157,6 +157,9 @@
                                                           </div>
                                                     </div>
                                               </div>
+
+                                               <!-- $product = new Product();
+                                                        $product->select("products", array("id", 8)); -->
       
                                                  <!-- HOT SALE -->
                                                      <div class="hot-sale">
@@ -210,11 +213,11 @@
                                                                         <div class="row">
                                                                           <?php
                                                                              foreach($newestProduct->result() as $values){
-                                                                                 $images = Input::json_decode($values["image"]);
+                                                                                 $images = explode(",", $values["image"]);
                                                                           ?>
                                                                             <div class="col-md-3 col-sm-4 col-4">
                                                                                 <div class="featured-item">
-                                                                                    <a href="detail.php?product=<?= $values["id"];?>&slug=<?= $values["slug"];?>"><img src="images/<?= $images[0]; ?>" alt=""></a>
+                                                                                    <a href="detail.php?product=<?= $values["id"];?>&slug=<?= $values["slug"];?>"><img src="admin/images/<?= $images[0]; ?>" alt=""></a>
                                                                                         <ul>
                                                                                             <li class="percentage">-3%</li>
                                                                                             <li><?=$values["name"]; ?></li>

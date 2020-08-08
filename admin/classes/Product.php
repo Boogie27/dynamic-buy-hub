@@ -8,14 +8,23 @@ class Product{
             $_result,
             $_count,
             $_error = false,
-            $_passed = false;
+            $_passed = false,
+            $_data = null;
 
 
-    public function __construct(){
+    public function __construct($id = null){
          $this->_pdo = Db::getInstance()->pdo(); 
+            $field = $id ? array("id", "=", $id) : null;
+            $check = self::get("products", $field);
+            if($check->count()){
+                $this->_data = $id ? $check->first() : $check->result();
+            }
     }
 
 
+    public function data(){
+        return $this->_data;
+    }
 
     
     public function query($sql, $params = array()){
@@ -145,6 +154,43 @@ class Product{
 
 
 
+ public function limit($table, $limit = array()){
+       if($table){
+           if(count($limit) == 2){
+               $start = $limit[0];
+               $end = $limit[1];
+               $values = array($start, $end);
+           }
+           $sql = "SELECT * FROM {$table} Limit {$start}, {$end}"; 
+           if(!$this->query($sql)->error()){
+               return $this;
+           }
+       }
+ return false;
+}
+
+
+public function select($table, $params){
+    if($table){
+        $value = null;
+        if(count($params) == 2){
+            $field = $params[0];
+            $limit = $params[1];
+            $value = " limit {$limit}";
+        }
+        if(count($params) == 1){
+            $field = $params[0];
+        }
+    $sql = "SELECT * FROM {$table} order by {$field} desc {$value}";
+        if(!$this->query($sql)->error()){
+            return $this;
+        }
+    }
+    return false;
+}
+
+
+
 
  public function delete($table, $where){
      return $this->action("DELETE", $table, $where);
@@ -180,8 +226,156 @@ class Product{
 
 
 
+    public function check_image($image = null){
+
+        if($image["name"]){
+            $imageName = $image["name"];
+            $tmp_name = $image["tmp_name"];
+            $error = $image["error"];
+            $type = $image["type"];
+            $size = $image["size"];
+    
+            $fileExt = explode(".", $imageName);
+            $fileExt = strtolower(end($fileExt));
+    
+            $extension = ["jpg", "jpeg", "png", "gif", "png"];
+            if(in_array($fileExt, $extension)){
+                if($error === 0){
+                        if($size <= 1000000){
+                            $fileName = "image_".uniqid().".".$fileExt;
+                            $this->_image = $fileName;
+                        }else{
+                            $this->_error = "File size must be maximum of 10mb";
+                        }
+                }else{
+                    $this->_error = "There was an Error uploading file.";
+                }
+            }else{
+                $this->_error = "Enter a valid file type!";
+            }
+        }
+        
+        if(!$this->_error){
+            $this->_passed = true;
+        }
+        return $this;
+    }
 
 
+
+
+    public function add_product($name, $brand, $category, $sub_category, $price, $oldprice, $qty, $detail, $description, $image){
+          if($this->check_image($image)){
+            if(move_uploaded_file($image["tmp_name"], "images/".$this->_image)){
+                self::insert("products", array(
+                    "name" => $name,
+                    "price" => $price,
+                    "old_price" => $oldprice,
+                    "brand" => $brand,
+                    "slug" => $sub_category,
+                    "categories" => $category,
+                    "details" => $detail,
+                    "description" => $description,
+                    "image" => $this->_image,
+                    "quantity" => $qty,
+                ));
+            } 
+             
+          }
+          if(!$this->_error){
+              $this->_passed = true;
+          }
+          return $this;
+    }
+    
+
+
+    public function edit_product($name, $brand, $category, $sub_category, $price, $oldprice, $qty, $detail, $description, $image){
+          
+         if($image["name"]){
+             if($this->check_image($image)){
+                move_uploaded_file($image["tmp_name"], "images/".$this->_image); 
+                $this->data()->image = $this->data()->image.",".$this->_image;
+             }
+         }
+                self::update("products", array(
+                    "name" => $name,
+                    "price" => $price,
+                    "old_price" => $oldprice,
+                    "brand" => $brand,
+                    "slug" => $sub_category,
+                    "categories" => $category,
+                    "details" => $detail,
+                    "description" => $description,
+                    "image" => $this->data()->image,
+                    "quantity" => $qty,
+                ), array("id", "=", $this->data()->id));
+            
+        if(!$this->_error){
+            $this->_passed = true;
+        }
+        return $this;
+    }
+
+
+
+
+    public function delete_image($id = null,  $index){
+        if($id){
+             $images = explode(",", $this->data()->image);
+             foreach($images as $values => $keys){
+                   if($values == $index){
+                       if(unlink("images/".$keys)){
+                            unset($images[$index]);
+                            array_values($images);
+                            $this->data()->image =  implode(",", $images); 
+                            self::update("products", array(
+                                "image" => $this->data()->image
+                            ), array("id", "=", $id));
+                            return true;  
+                       }
+                   }
+             }
+        }
+        return false;
+    }
+
+
+    public function delete_product(){
+        if($this->data()->id){
+             $saved_images = explode(",", $this->data()->image);
+             foreach($saved_images as $values){
+                 unlink("images/".$values);
+             }
+            return true;
+        }
+        return false;
+    }
+
+
+    public function price(){
+        $amount = 0;
+        foreach($this->data() as $values){
+            $amount += $values->price;
+        }
+        return $amount;
+    }
+
+    public function sales($sold = null){
+        $sales = 0;
+        if($sold){
+            $sales = $sold->price * $sold->sold;
+        }else{
+            foreach($this->result() as $values){
+
+            }
+        }
+       return $sales;
+    }
+
+
+//     One thing is quite obvious from taking a look at the term itself – it is a fusion of two terms; Photography and Journalism.  
+// Photography, as we discussed last class, refers to the process of drawing with the use of light. This process has been made po
 
     // end;
 }

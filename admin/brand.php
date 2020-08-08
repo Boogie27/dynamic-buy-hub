@@ -1,10 +1,16 @@
 <?php require_once "includes/header.php"; ?>
 <?php
-     $brand = new Brand();
-     $brand->get("brand");
-   
-?>
+   if(Input::exists("get")){
+     $page = Input::get("page");
+   }else{
+     $page = 1;
+   }
+   $numberPage = 5;
+   $start = ($page - 1) * $numberPage;
 
+   $brand = new Brand();
+   $brand->limit("brand", array($start, $numberPage));
+?>
     <section class="products-container cont" id="stickyTopNavPosition" data-top="50">
              <div class="row">
                    <!-- side bar section -->
@@ -89,16 +95,28 @@
                             </div>
                          </div>
                          <!-- AMOUNT AND PAGINATION -->
-                         <div class="row">
-                            <?php
-                                 if($brand->count()){ ?>
-                                     <div class="col-md-3">
-                                         <div class="brand-total"><b>Total:</b> <span><?= $brandTotal; ?></span></div>
-                                    </div>
-                                    <div class="col-md-3">Pagination</div>
-                               <?php  }
-                            ?>
-                         </div>
+                         <div class="text-center">
+                                <?php
+                                    $product = new Product();
+                                    $product->get("brand");
+                                  
+                                    if($product->count()){
+                                       $button = ceil($product->count()/$numberPage);
+                                       if($page > 1){
+                                        echo '<a href="brand.php?page='.($page - 1).'" class="btn btn-success">Previous</a>';
+                                       }
+
+                                       for($x = 1; $x <= $button; $x++){
+                                           echo '<a href="brand.php?page='.$x.'" class="btn btn-success">'.$x.'</a>';
+                                       }
+
+                                       if($page < $button){
+                                         echo '<a href="brand.php?page='.($page + 1).'" class="btn btn-success">Next</a>';
+                                       }
+                                    }
+
+                               ?>
+                                </div>
                     </div>
                 </div>
              </div>

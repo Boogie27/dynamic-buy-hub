@@ -4,6 +4,7 @@
         $productID =  Input::get("product");
         $product = new Product();
         $product->get("products", array("id", "=", $productID));
+        $productItems = $product->first();
     }
 ?>
 
@@ -18,21 +19,19 @@
                     <div class="main-product" id="product-detail">
                          <div class="products-header"><i class="fa fa-cubes"></i>Product Detail</i></div>
                          <div class="products-items-container">
-                            <div class="profile-details-header">NBA 2k19</div>
+                            <div class="profile-details-header" style="text-transform: uppercase;"><?= $productItems->name; ?></div>
                             <div class="product-detail-cont">
                                  <div class="row">
                                      <div class="col-lg-7 col-md-7 col-sm-12 col-12">
                                         <div class="frame-container swipperFrame">
                                             <div class="frame swipper">
                                                 <?php
-                                                  if($product->count()){
-                                                    $productItems = $product->first();
-                                                    $productImage = Input::json_decode($productItems->image);
+                                                    $productImage = explode(",",$productItems->image);
                                                      foreach($productImage as $images){ ?>
                                                         <div class="frame-item">
                                                             <img src="images/<?= $images; ?>" alt="<?= $images; ?>">
                                                         </div>
-                                                 <?php }
+                                                 <?php 
                                                   }
                                                 ?>
                                             </div>
@@ -45,20 +44,19 @@
                                      <div class="col-lg-5 col-md-5 col-sm-12 col-12">
                                          <div class="detail-mirror">
                                               <div class="deatail-mirror-header">
-                                                    <h2>Playstation</h2>
+                                                    <h2><?= $productItems->brand; ?></h2>
                                                    <ul>
-                                                       <li> <i class="far fa-star rate"></i>
-                                                        <i class="far fa-star rate"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i></li>
+                                                       <li><?php
+                                                           $ratings = new Ratings($productID);
+                                                           $ratings->star_ratings();   
+                                                       ?></li>
                                                    </ul>
                                              </div>
                                              <div class="row mirrorContainer">
                                              <?php
                                                   if($product->count()){
                                                     $productItems = $product->first();
-                                                    $productImage = Input::json_decode($productItems->image);
+                                                    $productImage = explode(",",$productItems->image);
                                                      foreach($productImage as $images){ ?>
                                                         <div class="col-lg-4 col-md-4 col-sm-2 col-2">
                                                             <div class="mirror-items mirror">
@@ -84,21 +82,7 @@
                                          <div class="detail-description-container">
                                              <div class="description-header">Product Details</div>
                                              <div class="description-body" id="description-body">
-                                                 <p>
-                                                        2K continues to deliver what's possible in sports gaming with NBA 2K20, featuring best in class graphics & gameplay, ground breaking game modes, and unparallel player control and customization.
-
-                                                        NBA 2K has evolved into much more than a basketball simulation. 2K continues to deliver what's possible in sports gaming with NBA 2K20, featuring best in class graphics & gameplay, ground breaking game modes, and unparallel player control and customization. Plus, with its immersive open world Neighborhood, NBA 2K20 is a platform for gamers and ballers to come together and create what's next in basketball culture.
-                                                        
-                                                        Pre Order NBA 2K20 now to receive bonus in game content!
-                                                 </p>
-                                                 <ul>
-                                                     <li>5,000 Virtual Currency</li>
-                                                     <li>5,000 MyTEAM Points</li>
-                                                     <li>5 MyCAREER Skill Boosts</li>
-                                                     <li>MyPLAYER Clothing Capsule</li>
-                                                     <li>10 MyTEAM League packs (delivered one a week)</li>
-                                                     <li>5 Heat Check packs (delivered one a week beginning at the start of the NBA season)</li>
-                                                 </ul>
+                                                 <p><?= nl2br($productItems->description); ?></p>
                                              </div>
                                             
                                          </div>
@@ -129,23 +113,22 @@
                                                                     <div class="prodcut-ratings-body">
                                                                         <div class="col-lg-12 rating-banner">
                                                                             <ul>
-                                                                                <li class="banner-header text-warning"><b>4</b>/5</li>
-                                                                                <li> <i class="far fa-star text-warning"></i>
-                                                                                    <i class="far fa-star text-warning"></i>
-                                                                                    <i class="far fa-star text-warning"></i>
-                                                                                    <i class="far fa-star text-warning"></i>
-                                                                                    <i class="far fa-star"></i>
-                                                                                </li>
-                                                                                <li>Ratings (1550)</li>
+                                                                                <?php
+                                                                                    $stars =  $ratings = new Ratings($productID); 
+                                                                                    $stars->percentage(5);
+                                                                                ?>
+                                                                                <li class="banner-header text-warning"><b><?= $ratings->rate(); ?></b>/5</li>
+                                                                                <li><?= $stars->star_ratings(); ?></li>
+                                                                                <li>Ratings (<?= $stars->total_count();?>)</li>
                                                                             </ul>
                                                                         </div>
                                                                         <div class="col-lg-12 ratings-bars">
                                                                             <ul class="bars product-detail-star-ratings" data-direction="width" data-top="200" data-type="count">
-                                                                                <li><div class="bar bg-warning" data-percentage="80" ></div><span> <b>5</b>  <i class="far fa-star text-warning"></i>(1550)</span></li>
-                                                                                <li><div class="bar bg-warning" data-percentage="60" ></div><span> <b>4</b>  <i class="far fa-star text-warning"></i>(1200)</span></li>
-                                                                                <li><div class="bar bg-warning" data-percentage="40" ></div><span> <b>3</b>  <i class="far fa-star text-warning"></i>(650)</span></li>
-                                                                                <li><div class="bar bg-warning" data-percentage="20" ></div><span> <b>2</b>  <i class="far fa-star text-warning"></i>(300)</span></li>
-                                                                                <li><div class="bar bg-warning" data-percentage="10" ></div><span> <b>1</b>  <i class="far fa-star text-warning"></i>(100)</span></li>
+                                                                                <li><div class="bar bg-warning" data-percentage="<?= $stars->percentage(5);?>" ></div><span> <b>5</b>  <i class="far fa-star text-warning"></i>(<?= $stars->rate_count(5);?>)</span></li>
+                                                                                <li><div class="bar bg-warning" data-percentage="<?= $stars->percentage(4);?>" ></div><span> <b>4</b>  <i class="far fa-star text-warning"></i>(<?= $stars->rate_count(4);?>)</span></li>
+                                                                                <li><div class="bar bg-warning" data-percentage="<?= $stars->percentage(3);?>" ></div><span> <b>3</b>  <i class="far fa-star text-warning"></i>(<?= $stars->rate_count(3);?>)</span></li>
+                                                                                <li><div class="bar bg-warning" data-percentage="<?= $stars->percentage(2);?>" ></div><span> <b>2</b>  <i class="far fa-star text-warning"></i>(<?= $stars->rate_count(2);?>)</span></li>
+                                                                                <li><div class="bar bg-warning" data-percentage="<?= $stars->percentage(1);?>" ></div><span> <b>1</b>  <i class="far fa-star text-warning"></i>(<?= $stars->rate_count(1);?>)</span></li>
                                                                             </ul>
                                                                         </div>
                                                                     </div>
@@ -153,88 +136,35 @@
                                                             </div>
                                                             <div class="col-lg-8 col-md-8">
                                                                 <div class="product-review-container">
-                                                                    <div class="product-review-header">Product Review (23)</div>
+                                                                <?php
+                                                                    $user = new User();
+                                                                    $user->get("comment", array("product_id", "=", $productItems->id));
+                                                                ?>
+                                                                    <div class="product-review-header">Product Review (<?= $user->count() ?>)</div>
                                                                     <div class="product-review-body">
-                                                                        <ul>
-                                                                            <li>
-                                                                                <span>By sharon</span> 
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star"></i>
-                                                                                <i class="far fa-star"></i> 
-                                                                            </li>
-                                                                            <li class="review-title">i love the product</li>
-                                                                            <li class="review-paragraph">this is the most wonderful tranaction i have ever made , i love buy hub.</li>
-                                                                            <li>
-                                                                                <span class="">28-12-2020</span>
-                                                                                <span class="verified text-success"><i class="fa fa-check"></i>Verified purchase</span>
-                                                                            </li>
-                                                                        </ul>
-                                                                        <ul>
-                                                                            <li>
-                                                                                <span>By maxwell</span> 
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star"></i>
-                                                                                <i class="far fa-star"></i> 
-                                                                            </li>
-                                                                            <li class="review-title">lovely product</li>
-                                                                            <li class="review-paragraph">this is the most wonderful tranaction i have ever made , i love buy hub.</li>
-                                                                            <li>
-                                                                                <span class="">28-12-2020</span>
-                                                                                <span class="verified text-success"><i class="fa fa-check"></i>Verified purchase</span>
-                                                                            </li>
-                                                                        </ul>
-                                                                        <ul>
-                                                                            <li>
-                                                                                <span>By blessing</span> 
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star"></i> 
-                                                                            </li>
-                                                                            <li class="review-title">i like this product</li>
-                                                                            <li class="review-paragraph">this is the most wonderful tranaction i have ever made , i love buy hub.</li>
-                                                                            <li>
-                                                                                <span class="">28-12-2020</span>
-                                                                                <span class="verified text-success"><i class="fa fa-check"></i>Verified purchase</span>
-                                                                            </li>
-                                                                        </ul>
-                                                                        <ul>
-                                                                            <li>
-                                                                                <span>By toyin</span> 
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i> 
-                                                                            </li>
-                                                                            <li class="review-title">i love the product</li>
-                                                                            <li class="review-paragraph">this is the most wonderful tranaction i have ever made , i love buy hub.</li>
-                                                                            <li>
-                                                                                <span class="">28-12-2020</span>
-                                                                                <span class="verified text-success"><i class="fa fa-check"></i>Verified purchase</span>
-                                                                            </li>
-                                                                        </ul>
-                                                                        <ul>
-                                                                            <li>
-                                                                                <span>By chima</span> 
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star rate"></i>
-                                                                                <i class="far fa-star"></i>
-                                                                                <i class="far fa-star"></i>
-                                                                                <i class="far fa-star"></i> 
-                                                                            </li>
-                                                                            <li class="review-title">awesomeproduct</li>
-                                                                            <li class="review-paragraph">this is the most wonderful tranaction i have ever made , i love buy hub.</li>
-                                                                            <li>
-                                                                                <span class="">28-12-2020</span>
-                                                                                <span class="verified text-success"><i class="fa fa-check"></i>Verified purchase</span>
-                                                                            </li>
-                                                                        </ul>
+                                                                    <?php
+                                                                        if($user->count()){ 
+                                                                            foreach($user->result() as $values){ ?>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <span>By sharon</span> 
+                                                                                        <?php
+                                                                                           Ratings::user_rate($values->ratings);
+                                                                                        ?>
+                                                                                    </li>
+                                                                                    <li class="review-title"><?= $values->title; ?></li>
+                                                                                    <li class="review-paragraph"><?= $values->comment; ?></li>
+                                                                                    <li>
+                                                                                        <span class=""><?= Input::date($values->date); ?></span>
+                                                                                        <span class="verified <?= $values->verified ? "text-success" : "text-danger";?>"><i class="fa <?= $values->verified ? "fa-check" : "fa-times"?>"></i><?= $values->verified ? "verified purchase" : "Not verified";?></span>
+                                                                                    </li>
+                                                                                </ul>
+                                                                        <?php }
+                                                                        ?>   
+                                                                    <?php }else{
+                                                                        echo '<div class="alert alert-danger" style="margin-top: 50px;">There are no user comments!</div>';
+                                                                    }
+                                                                    ?>
                                                                     </div>
                                                                 </div>
                                                             </div>

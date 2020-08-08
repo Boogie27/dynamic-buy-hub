@@ -1,6 +1,10 @@
 <?php
  require_once "core/init.php";
  require_once "includes/helper.php";
+
+ if(!Session::exists(Config::get("session/session_name"))){
+    Redirect::to("signup.php"); 
+}
  ?>
 
 

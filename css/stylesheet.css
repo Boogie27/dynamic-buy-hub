@@ -1773,15 +1773,19 @@ strike{
 /* --------------------------------------------- */
 /*           QUESTION SECTION                    */
 /* --------------------------------------------- */
+.question-container{
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
 .question{
-    padding: 50px 0px;
-    margin-bottom: 50px;
+    padding: 20px 0px;
+    margin-bottom: 20px;
 }
 .question-header h2{
     font-size: 75%;
 }
 .question form{
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 50px;
 }
 .question form input{
@@ -1802,6 +1806,9 @@ strike{
 .customers{
     margin-top: 50px;
     width: 70%;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 2px 0px 2px 2px rgb(239, 237, 237);
 }
 .customer-images{
    overflow: hidden;

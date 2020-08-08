@@ -91,11 +91,11 @@ if(Session::exists(Config::get("session/session_name"))){
                                     $id = $values["item_id"];
                                    if($cart->get("products", array("id", "=", $id))->count()){
                                         $item = $cart->first();
-                                        $image = Input::json_decode($item["image"]);
+                                        $image = explode(",", $item["image"]);
                                        ?>
                                         <ul class="itemsCont">
                                             <div class="row">
-                                                <li><a href="detail.php?product=<?= $item["id"];?>&slug=<?= $item["slug"];?>"><img src="images/<?= $image[0]; ?>" alt="<?= $item["name"]; ?>"></a></li>
+                                                <li><a href="detail.php?product=<?= $item["id"];?>&slug=<?= $item["slug"];?>"><img src="admin/images/<?= $image[0]; ?>" alt="<?= $item["name"]; ?>"></a></li>
                                                 <li class="checkoutItemInfo">
                                                     <ul>
                                                         <li><?= $item["name"]; ?></li>

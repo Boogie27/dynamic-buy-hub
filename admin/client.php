@@ -95,7 +95,7 @@ $user_profile = $profile->first();
                                                                                      $products = new Product();
                                                                                      $products->get("products", array("id", "=",  $value["item_id"]));
                                                                                      if($products->count()){
-                                                                                          $image = json_decode($products->first()->image, true)[0];
+                                                                                        $image = explode(",",$products->first()->image)[0];
                                                                                           echo ' <a href="product_detail.php?product='.$products->first()->id.'"><img src="images/'.$image.'" alt="'.$products->first()->name.'"></a>';
                                                                                      }
                                                                                }

@@ -44,7 +44,6 @@ lightPreloader();
 //  function that removes dark background and removes all asynchronous forms and popups
 // ========================================================================================
 function hideDarkTheme(){
-   // $(".dark-skin").removeClass("dark-skin-active");
    $(".dark-skin").fadeOut()
     $("#modalBox").slideUp(100);
     $("#subCategoryModalBox").slideUp(100);
@@ -134,6 +133,34 @@ function responsiveBars(){
    }
 
 
+// ============= DYNAMIC BAR CHART==========================================
+    var index = 0;
+    var barChartBtn = $(".bar-chart .stats");
+    var barChartButton = $(barChartBtn).children();
+
+    function dynamic_bar_chat(index){
+       var barChart = $(".bar-chart ul.bars");
+        //hide bar chart
+        for(var i = 0; i < barChart.length; i++){
+            $(barChart[i]).hide();
+        }
+        for(var i = 0; i < barChartButton.length; i++){
+            $(barChartButton[i]).removeClass("stats-item");
+        }
+        $(barChartButton[index]).addClass("stats-item")
+        $(barChart[index]).show();
+    }
+   dynamic_bar_chat(index);
+ 
+   
+   
+
+  $.each(barChartButton, function(index, current){
+        $(this).click(function(e){
+            dynamic_bar_chat(index);
+        });
+  });
+
 
 
 
@@ -154,13 +181,13 @@ function responsiveBars(){
                         visibility: visibility,
                         left: left
                     });
-                  $(darkSkin).fadeToggle();
         }
     
         
         $.each(profileNav, function(index, current){
             var buttonOpen =  $(this).find("#sideNavOpenButton");
             buttonOpen.click(function(){
+                $(darkSkin).fadeIn();
                 sideNavAction("0px", "visible");
             });
         });
@@ -171,6 +198,7 @@ function responsiveBars(){
     
         $(darkSkin).click(function(){
            if($(sideNavigation).css("left") == "0px"){
+                $(darkSkin).fadeOut();
                  sideNavAction("-350px", "hidden");
            }
         });
@@ -519,6 +547,8 @@ function loginSignForm(){
             formInt(index);
         });
     });
+
+  
 
 }
 
@@ -1272,7 +1302,99 @@ function selected_category(){
     });
  
 }
+
 selected_category();
+
+
+
+
+// ==================================================================
+//   FUNCTION THAT DISPLAYS EDIT PRODUCT IMAGE 
+// ==================================================================
+ function product_edit_images(){
+    var productImage = $(".editImage-frame");
+    if(productImage.length > 0){
+        var id = $(productImage).attr("id");
+        $.ajax({
+            url: "ajax.php",
+            method: "post",
+            data: {
+              productImage: "productImage",
+              productImageID: id 
+            },
+            success: function(response){
+                $(productImage).html(response);
+            }
+            });
+    }
+    
+ }
+ product_edit_images();
+    
+
+
+// ==================================================================
+//   FUNCTION THAT DELETES PRODUCT IMAGE 
+// ==================================================================
+function product_image_delete(){
+    var productImageDelete = $(".editImage-frame");
+       $(productImageDelete).on("click", "button", function(e){
+        var id = $(this).attr("id");
+        var index = $(".editImage-frame button").index($(this));
+       
+              $.ajax({
+                url: "ajax.php",
+                method: "post",
+                data: {
+                    productImageDelete: "productImageDelete",
+                    imageID: id ,
+                    imageIndex: index
+                },
+                success: function(response){
+                   if(response == "image_deleted"){
+                        product_edit_images();
+                   }
+                }
+                });
+       });
+}
+product_image_delete()
+
+
+// ==================================================================
+//   FUNCTION THAT DELETES PRODUCT 
+// ==================================================================
+function delete_product(){
+ var productDeleteBtn = $(".productDeleteBtn");
+     $.each(productDeleteBtn, function(index, current){
+              $(this).click(function(e){
+                 e.preventDefault();
+                 var id = $(this).attr("id");
+                 if(confirm("Do you want to delete this product?")){
+                    $.ajax({
+                        url: "ajax.php",
+                        method: "post",
+                        data: {
+                            productItemDelete: "productItemDelete",
+                            productDeleteID: id
+                        },
+                        success: function(response){
+                          if(response == "deleted"){
+                              location.reload();
+                          }
+                        }
+                    });
+                 }
+              });
+     });
+}
+delete_product();
+
+
+
+
+
+
 
 // end;
 });

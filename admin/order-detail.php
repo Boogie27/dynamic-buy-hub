@@ -21,7 +21,7 @@
                               $person = new User();
                               $user = $person->get("users", array("id", "=",  $user_id))->first();
                          ?>
-                             <img src="../<?= $user->image; ?>" alt="manderez"> <?=$user->name; ?>
+                             <img src="<?= $user->image; ?>" alt="<?= $user->name;?>"> <?=$user->name; ?>
                               <form action="" method="post">
                                   <button><i class="fa fa-trash"></i></button>
                               </form>
@@ -36,13 +36,13 @@
                                    $product = $order->get("products", array("id", "=", $id));
                                    if($product->count()){
                                        $product = $product->first();
-                                       $image = json_decode($product->image, true);
+                                       $image = explode(",", $product->image)[0];
                                        $category = $order->get("categories", array("id", "=", $product->categories))->first()
                                        ?>
                                         <div class="order-detail-container" id="order-detail">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-4 col-6">
-                                                        <div class="order-image-container"><a href="product_detail.php"><img src="images/<?= $image[0]?>" alt="madden-20"></a></div>
+                                                        <div class="order-image-container"><a href="product_detail.php"><img src="images/<?= $image;?>" alt="madden-20"></a></div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-6" id="order-detail-info">
                                                         <div class="order-detail-info">

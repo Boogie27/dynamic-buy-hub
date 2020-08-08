@@ -20,31 +20,31 @@
                                                 <div class="row">
                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-6">
                                                         <div class="account-items">
-                                                             <a href="order.php"><img src="images/order-image.jpeg" alt="order-image"></a>
+                                                             <a href="order.php"><img src="admin/logo/order-image.jpeg" alt="order-image"></a>
                                                              <h3>check orders</h3>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-6">
                                                         <div class="account-items">
-                                                                <a href="cart.php"><img src="images/order-cart.jpeg" alt="order-cart"></a>
+                                                                <a href="cart.php"><img src="admin/logo/order-cart.jpeg" alt="order-cart"></a>
                                                                 <h3>Cart Information</h3>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-6">
                                                         <div class="account-items">
-                                                                <a><img src="images/order-password.jpeg" alt="order-password" class="form-action-button" data-type="changePassword-form"></a>
+                                                                <a><img src="admin/logo/order-password.jpeg" alt="order-password" class="form-action-button" data-type="changePassword-form"></a>
                                                                 <h3>Change password</h3>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-6">
                                                         <div class="account-items">
-                                                            <a href="privacy.php"><img src="images/order-privacy.jpg" alt="order-privacy"></a>
+                                                            <a href="privacy.php"><img src="admin/logo/order-privacy.jpg" alt="order-privacy"></a>
                                                             <h3>Account Privacy</h3>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-6">
                                                         <div class="account-items">
-                                                                 <a><img src="images/account-image-delete.jpeg" alt="account-image-delete"  class="form-action-button" data-type="deleteAccount-form"></a>
+                                                                 <a><img src="admin/logo/account-image-delete.jpeg" alt="account-image-delete"  class="form-action-button" data-type="deleteAccount-form"></a>
                                                                 <h3>Delete Account</h3>
                                                         </div>
                                                     </div>

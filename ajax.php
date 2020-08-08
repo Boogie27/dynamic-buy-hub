@@ -87,8 +87,8 @@ if(Input::get("cartItem")){
                   $product = new Cart();
                   if($product->get("products", array("id", "=", $itemID))->count()){
                         $productItem = $product->first();
-                        $image = Input::json_decode( $productItem["image"]);
-                        echo ' <li><a href="detail.php?product='.$productItem['id'].'&slug='.$productItem['slug'].'"><img src="images/'.$image[0].'" alt="'.$productItem["name"].'">'.$productItem['name'].' ( '.$values['quantity'].' )</a></li>';
+                        $image = explode(",", $productItem["image"]);
+                        echo ' <li><a href="detail.php?product='.$productItem['id'].'&slug='.$productItem['slug'].'"><img src="admin/images/'.$image[0].'" alt="'.$productItem["name"].'">'.$productItem['name'].' ( '.$values['quantity'].' )</a></li>';
                   }
           }
      }else{

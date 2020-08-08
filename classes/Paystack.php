@@ -52,6 +52,7 @@ class Paystack extends User{
                 $itemID = $values["item_id"];
                 $quantity = $values["quantity"];
                 $cart->update_quantity($itemID, array($quantity, false)); 
+                $cart->update_sold($itemID, $quantity);
             }
             
             $this->_paid = true;

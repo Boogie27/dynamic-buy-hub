@@ -55,6 +55,21 @@ class Input{
                     return $sign.number_format($string);
                }
            }
+
+
+
+           public function date($string){
+            if($string){
+                return explode(" ", $string)[0];
+            }
+            return false;
+        }
+
+
+
+
+
+
           
     // end;
 }

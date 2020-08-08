@@ -25,13 +25,13 @@
                                 $cartItem = $cart->get("products", array("id", "=", $ID));
                                 if($cartItem->count()){ 
                                     $items = $cartItem->first();
-                                    $itemImages = Input::json_decode($items["image"]);
+                                    $itemImages = explode(",", $items["image"]);
                                     ?>
                                         <div class="cart-main-items">
                                             <div class="row">
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-4">
                                                         <div class="cart-image">
-                                                           <a href="detail.php?product=<?= $items["id"];?>&slug=<?= $items["slug"];?>"><img src="images/<?= $itemImages[0]; ?>" alt="female-native-4"></a>
+                                                           <a href="detail.php?product=<?= $items["id"];?>&slug=<?= $items["slug"];?>"><img src="admin/images/<?= $itemImages[0]; ?>" alt="female-native-4"></a>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-8 col-md-8 col-sm-8 col-8">
@@ -182,14 +182,14 @@
                    $itemSaved = $Saved->get("products", array("id", "=", $item_id));
                    if($itemSaved->count()){  
                      $saveItem = $itemSaved->first();
-                     $saveImage = Input::json_decode($saveItem["image"]);
+                     $saveImage = explode(",", $saveItem["image"]);
                        ?>
                        <div class="saveForLater-container">
                         <div class="saveForLater-items">
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-4">
                                     <div class="saveForLater-image">
-                                    <a href="detail.php?product=<?= $saveItem["id"];?>&slug=<?= $saveItem["slug"];?>"><img src="images/<?= $saveImage[0]; ?>" alt="nba_2k20"></a>                                
+                                    <a href="detail.php?product=<?= $saveItem["id"];?>&slug=<?= $saveItem["slug"];?>"><img src="admin/images/<?= $saveImage[0]; ?>" alt="nba_2k20"></a>                                
                                     </div>
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-8">
@@ -247,10 +247,10 @@
                      <div class="might-like-frame swiper-track">
                         <?php
                              foreach($mightLikeObject->result() as $mightLikeItems){ 
-                                     $mightLikeImage = Input::json_decode($mightLikeItems["image"]);
+                                     $mightLikeImage = explode(",", $mightLikeItems["image"]);
                                  ?>
                                 <div class="might-like-item">
-                                <a href="detail.php?product=<?= $mightLikeItems["id"];?>&slug=<?= $mightLikeItems["slug"];?>"><img src="images/<?= $mightLikeImage[0];?>" alt="female-native-4"></a>
+                                <a href="detail.php?product=<?= $mightLikeItems["id"];?>&slug=<?= $mightLikeItems["slug"];?>"><img src="admin/images/<?= $mightLikeImage[0];?>" alt="female-native-4"></a>
                                     <ul>
                                         <li>dansiki women</li>
                                         <li class="by"><b>made by</b> <?= $mightLikeItems["brand"];?></li>

@@ -1,5 +1,13 @@
 <?php require_once "includes/header.php"; ?>
-
+<?php
+   if(Input::exists("get")){
+     $page = Input::get("page");
+   }else{
+     $page = 1;
+   }
+   $numberPage = 5;
+   $start = ($page - 1) * $numberPage;
+?>
 
 
 
@@ -124,7 +132,7 @@
 <?php
 
     $categories = new Category();
-    $categories->get("categories");
+    $categories->limit("categories", array($start, $numberPage));
 ?>
         
 
@@ -168,10 +176,12 @@
                                        <?php
                                             if($categories->count()){
                                                 $x = 1;
-                                                foreach($categories->result() as $values){ ?>
+                                                foreach($categories->result() as $values){ 
+                                                    $start++;
+                                                    ?>
                                                     <tr class="table-parent">
                                                         <form action="" method="post" class="productTableForm">
-                                                            <td><li class="data"><?= $x; ?></li></td>
+                                                            <td><li class="data"><?= $start; ?></li></td>
                                                             <td>
                                                                 <ul>
                                                                     <li><a href="#" class="main-anchor"><img src="category-image/<?= $values->image; ?>" alt="<?= $values->image;?>"></a></li>
@@ -231,6 +241,29 @@
                                           
                                        </tbody>
                                    </table>
+                                </div>
+                                 <!-- AMOUNT AND PAGINATION -->
+                                <div class="text-center">
+                                <?php
+                                    $product = new Category();
+                                    $product->get("categories");
+                                  
+                                    if($product->count()){
+                                       $button = ceil($product->count()/$numberPage);
+                                       if($page > 1){
+                                        echo '<a href="category.php?page='.($page - 1).'" class="btn btn-success">Previous</a>';
+                                       }
+
+                                       for($x = 1; $x <= $button; $x++){
+                                           echo '<a href="category.php?page='.$x.'" class="btn btn-success">'.$x.'</a>';
+                                       }
+
+                                       if($page < $button){
+                                         echo '<a href="category.php?page='.($page + 1).'" class="btn btn-success">Next</a>';
+                                       }
+                                    }
+
+                               ?>
                                 </div>
                            </div>
                          </div>

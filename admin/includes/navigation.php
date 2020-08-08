@@ -24,7 +24,7 @@
                               </li>
                               <li><a href="#"><i class="far fa-envelope"></i> <i class="fa fa-circle message"></i></a></li>
                               <li><a href="#"><i class="far fa-bell"></i> <i class="fa fa-circle notification"></i></a></li>
-                              <li><i class="fas fa-power-off"></i></li>
+                              <li><a href="logout.php"><i class="fas fa-power-off"></i></a></li>
                               <li><i class="fas fa-bars" id="sideNavOpenButton"></i></li>
                           </ul>
                       </div>
@@ -39,7 +39,7 @@
                               </li>
                               <li><a href="#"><i class="far fa-envelope"></i> <i class="fa fa-circle message"></i></a></li>
                               <li><a href="#"><i class="far fa-bell"></i> <i class="fa fa-circle notification"></i></a></li>
-                              <li><i class="fas fa-power-off"></i></li>
+                              <li><a href="logout.php"><i class="fas fa-power-off"></i></a></li>
                               <li><i class="fas fa-bars" id="sideNavOpenButton"></i></li>
                           </ul>
                       </div>
@@ -67,7 +67,7 @@
                                 </li>
                                 <li><a href="#"><i class="far fa-envelope"></i> <i class="fa fa-circle message"></i></a></li>
                                 <li><a href="#"><i class="far fa-bell"></i> <i class="fa fa-circle notification"></i></a></li>
-                                <li><i class="fas fa-power-off"></i></li>
+                                <li><a href="logout.php"><i class="fas fa-power-off"></i></a></li>
                                 <li><i class="fas fa-bars" id="sideNavOpenButton"></i></li>
                             </ul>
                         </div>
@@ -88,7 +88,7 @@
                                 </li>
                                 <li><a href="#"><i class="far fa-envelope"></i> <i class="fa fa-circle message"></i></a></li>
                                 <li><a href="#"><i class="far fa-bell"></i> <i class="fa fa-circle notification"></i></a></li>
-                                <li><i class="fas fa-power-off"></i></li>
+                                <li><a href="logout.php"><i class="fas fa-power-off"></i></a></li>
                                 <li><i class="fas fa-bars" id="sideNavOpenButton"></i></li>
                             </ul>
                         </div>

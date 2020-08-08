@@ -64,6 +64,22 @@ class Cart extends Category{
     }
 
 
+    public function update_sold($id, $quantity){
+        if($id){
+            $check = self::get("products", array("id", "=", $id));
+            if($check->count()){
+                $sold = $check->first()["sold"];
+                $sold += $quantity;
+                $item = self::update("products", array(
+                    "sold" => $sold
+                ), array("id", "=", $id));
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public function available_qunatity(){
         return $this->_availableQuantity;
     }

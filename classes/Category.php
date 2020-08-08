@@ -215,7 +215,24 @@ class Category{
     
 
 
-
+    public function select($table, $params){
+        if($table){
+            $value = null;
+            if(count($params) == 2){
+                $field = $params[0];
+                $limit = $params[1];
+                $value = " limit {$limit}";
+            }
+            if(count($params) == 1){
+                $field = $params[0];
+            }
+        $sql = "SELECT * FROM {$table} order by {$field} desc {$value}";
+            if(!$this->query($sql)->error()){
+                return $this;
+            }
+        }
+        return false;
+    }
 
 
 

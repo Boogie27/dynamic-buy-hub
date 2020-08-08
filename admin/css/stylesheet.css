@@ -503,6 +503,7 @@ i, button, a{
    font-weight: 500;
    padding: 5px;
    text-align: center;
+   cursor: pointer;
 }
 .bar-chart ul.stats div{
     font-size: 70%;
@@ -1609,6 +1610,10 @@ body.login-body{
     text-align: center;
     padding: 10px;
     cursor: pointer;
+}
+.form-header h3 a{
+    color: #555;
+    text-decoration: none;
 }
 .form-header h3.inview{
     border-top: 2px solid orange;

@@ -94,17 +94,17 @@
                           </div>
                           <div class="col-lg-4 responsive">
                               <!-- signup form -->
-                              <div class="form-header"><h3 class="formbutton inview" id="signup"><a href="signup.php">Signup</a></h3><h3 class="formbutton"id="login"><a href="login.php">Login</a></h3></div>
+                              <div class="form-header"><h3 class="inview" id="signup"><a href="signup.php">Signup</a></h3><h3 class=""id="login"><a href="login.php">Login</a></h3></div>
                                 <?php  
                                     if(Session::exists("alert")){
-                                        echo '<div class="alert alert-danger">';
+                                        echo '<div class="alert alert-danger text-center" style="font-size: 75%;">';
                                         foreach(Session::flash("alert") as $values){
                                             echo $values."<br>";
                                         }
                                         echo '</div>';
                                     }
                                 ?>
-                                <form action="" method="post" id="signUpForm">
+                                <form action="signup.hp" method="post" id="signUpForm">
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="name">Name:</label>

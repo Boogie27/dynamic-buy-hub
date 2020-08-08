@@ -39,7 +39,6 @@ class Validate extends Product{
                               break;
                               case "unique":
                                       $check = self::get($value, array($values, "=", $action));
-                                     
                                       if($check->count()){
                                           $this->addError("The {$name} {$action} already exists!");
                                       }

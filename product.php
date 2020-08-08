@@ -90,10 +90,10 @@ if(Input::exists("POST")){
                                           $special = new Category();
                                          if($special->rand("products", array("featured", "=", true), 4)->count()){
                                                 foreach($special->result() as $values){ 
-                                                    $images = Input::json_decode($values["image"]);
+                                                    $images = explode(",", $values["image"]);
                                                     ?>
                                                         <div class="special-item slideItem">
-                                                            <a href="detail.php"><img src="images/<?= $images[0]; ?>" alt="laptop"></a>
+                                                            <a href="detail.php?product=<?=$values["id"] ?>&slug=<?= $values["slug"];?>"><img src="admin/images/<?= $images[0]; ?>" alt="laptop"></a>
                                                             <ul>
                                                                 <li><?= $values["name"]; ?></li>
                                                                 <li><?= Input::money($values["price"]); ?></li>
@@ -182,6 +182,24 @@ if(Input::exists("POST")){
                                                      <div class="hot-sale">
                                                           <div class="hot-sale-header"><h2>hot sale</h2></div>
                                                       <div class="images-swipe" id="swipe-frame">
+                                                        <?php
+                                                                  $product = new Category();
+                                                                  $product->select("products", array("id", 11));
+                                                                   if($product->count()){
+                                                                       foreach($product->result() as $values){ 
+                                                                           $image = explode(",", $values["image"]);
+                                                                           ?>
+                                                                            <div class="hot-sale-image" id="swipe">
+                                                                                <div class="new" id="tag">New</div>
+                                                                                <a href="detail.php?product=<?= $values["id"];?>&slug=<?= $values["slug"];?>"><img src="admin/images/<?=$image[0] ?>" alt="<?= $image[0]?>"></a>
+                                                                                <ul>
+                                                                                    <li class="slideName"><?= $values["name"];?></li>
+                                                                                </ul>
+                                                                            </div> 
+                                                                <?php }
+                                                                   }
+                                                        ?>
+      
                                                           <!-- <div class="hot-sale-image" id="swipe">
                                                                     <div class="new" id="tag">New</div>
                                                                     <a href="#"> <img src="images/watch_1.png" alt=""></a>
@@ -255,7 +273,7 @@ if(Input::exists("POST")){
                                                        <?php    
                                                          if($products->count() > 0){
                                                                 foreach($products->result() as $featured){ 
-                                                                    $image = Input::json_decode($featured["image"]);
+                                                                    $image = explode(",", $featured["image"]);
                                                                     ?>
                                                                     <div class="col-md-3 col-sm-4 col-4">
                                                                         <div class="featured-item">

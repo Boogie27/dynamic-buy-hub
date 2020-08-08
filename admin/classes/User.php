@@ -23,7 +23,7 @@ class User extends Product{
             $check = self::get("admin", array($userField, "=", $user));
             if($check->count()){
                 $this->_data = $check->first();
-                return true;
+                return $this;
             }
         }
         return false;
@@ -208,6 +208,40 @@ class User extends Product{
         return $this->_image;
     }
 
+
+
+    public function signup($field = array()){
+        if(!self::insert("admin",$field )){
+            $this->_error = "There was a problem signing up";
+        }else{
+            $check = self::get("admin", array("email", "=", $field["email"]));
+            if($check->count()){
+                Session::put(Config::get("session/session_name"), $check->first()->id);
+            }
+        }
+        if(!$this->_error){
+            $this->_passed = true;
+        }
+        return $this;
+    }
+
+
+    public function login($email, $password){
+         if(!$this->find($email)){
+            $this->_error = "The email {$email} does not exist!";
+         }else if($this->data()->password != Hash::make($password, $this->data()->salt)){
+            $this->_error = "Wrong password!";
+         }else{
+             self::update("admin", array(
+                 "online" => 1
+             ), array("id", "=", $this->data()->id));
+            Session::put(Config::get("session/session_name"), $this->data()->id);
+         }
+        if(!$this->_error){
+            $this->_passed = true;
+        }
+        return $this;
+    }
 
 
     // end;

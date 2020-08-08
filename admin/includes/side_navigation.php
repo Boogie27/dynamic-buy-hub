@@ -35,8 +35,8 @@
                     <li class="<?= $pageName == "admin.php" ? "active" : "" ?>"><a href="admin.php">Admin <i class="fas fa-users"></i></a></li>
                     <li class="<?= $pageName == "profile.php" ? "active" : "" ?>"><a href="profile.php">Profile <i class="fas fa-user-tie"></i></a></li>
                     <li class="<?= $pageName == "settings.php" ? "active" : "" ?>"><a href="#">Settings <i class="fas fa-cog"></i></a></li>
-                    <li><a href="form.php">Form <i class="fas"></i></a></li>
-                    <li><a href="#">Logout <i class="fas fa-power-off"></i></a></li>
+                   <!-- <li><a href="login.php">Login <i class="fas"></i></a></li>'; -->
+                    <li><a href="logout.php">Logout <i class="fas fa-power-off"></i></a></li>
                 </ul>
             </div>
         </div>

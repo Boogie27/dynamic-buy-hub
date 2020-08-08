@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-$_SESSION["id"] = 1;
-
 $GLOBALS["config"] = array(
     "mysql" => array(
         "host" => "127.0.0.1",
@@ -11,7 +9,7 @@ $GLOBALS["config"] = array(
         "db" => "shop_hub"
     ),
     "session" => array(
-        "session_name" => "id",
+        "session_name" => "admin_id",
         "token_name" => "token",
     ),
     "remember" => array(
@@ -34,3 +32,12 @@ spl_autoload_register(function($class){
 
 
 require_once "functions/sanitize.php";
+
+if(Session::exists(Config::get("session/session_name"))){
+    $id = Session::get(Config::get("session/session_name"));
+    $user = new User();
+    $userInfo = $user->find($id);
+    if($id != $userInfo->data()->id){
+        Redirect::to("signup.php"); 
+    }
+}

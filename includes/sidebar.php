@@ -37,10 +37,10 @@
                                   if($weekly->count()){
                                      echo' <div class="week-header"><h2>weekly featured</h2></div>';
                                         foreach($weekly->result() as $values){ 
-                                            $images = Input::json_decode($values["image"]);
+                                            $images = explode(",", $values["image"]);
                                             ?>
                                                 <div class="weekly-item">
-                                                    <a href="detail.php?product=<?= $values["id"];?>&slug=<?= $values["slug"];?>"><img src="images/<?= $images[0]; ?>" alt="women_shoe"></a>
+                                                    <a href="detail.php?product=<?= $values["id"];?>&slug=<?= $values["slug"];?>"><img src="admin/images/<?= $images[0]; ?>" alt="women_shoe"></a>
                                                     <ul>
                                                         <li><?= $values["name"]; ?></li>
                                                         <li><i class="fas fa-star star"></i><i class="fas fa-star star"></i><i class="fas fa-star star"></i></li>

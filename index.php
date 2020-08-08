@@ -26,20 +26,20 @@
                                                     <div class="col-lg-12 col-md-12 expland">
                                                       <div class="main-images slideContainer">
                                                           <div class="slide slideItem">
-                                                              <img src="images/main-image_1.jpg" alt="main-image-1" class="main-img">
+                                                              <img src="admin/logo/index-slide-3.jpg" alt="index-slide-3" class="main-img">
                                                                <div class="tag">
                                                                   <h2>gifts at every price</h2>
                                                                </div>
                                                           </div>
                                                           <div class="slide slideItem" style="display: block;">
-                                                              <img src="images/index-slide-2.jpg" alt="index-slide-2" class="main-img">
+                                                              <img src="admin/logo/index-slide-2.jpg" alt="index-slide-2" class="main-img">
                                                               <div class="tag">
                                                                 <h2>free online shopping</h2>
                                                                 <a href="">explore</a>
                                                              </div>
                                                           </div>
                                                           <div class="slide slideItem">
-                                                              <img src="images/index-slide-3.jpg" alt="index-slide-3" class="main-img">
+                                                          <img src="admin/logo/main-image_1.jpg" alt="main-image-1" class="main-img">
                                                               <div class="tag">
                                                                 <h2>get upto 30% off <br>new arivals</h2>
                                                              </div>
